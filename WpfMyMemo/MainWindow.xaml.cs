@@ -24,5 +24,10 @@ namespace WpfMyMemo
         {
             InitializeComponent();
         }
+
+        private void MenuItemFileExit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();   // Application.Exit(); と同じ。 Environment.Exit(1); は異なる。
+        }
     }
 }
