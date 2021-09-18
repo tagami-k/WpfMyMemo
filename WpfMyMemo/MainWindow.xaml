@@ -19,6 +19,7 @@
             </MenuItem>
             <MenuItem Header="メニュー2(_B)"/>
             <MenuItem Header="メニュー3(_C)"/>
+            <MenuItem Header="メニュー4(_D)"/>
         </Menu>
         
         <TextBox />
