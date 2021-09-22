@@ -31,21 +31,41 @@ namespace WpfMyMemo
             get { return FileNameValue; }
             set
             {
-                string s = InitialFileName;
-                if (value != "")
-                { 
-                    s += " - " + value;
-                    MenuItemFileSave.IsEnabled = true;
-                }
-                else
-                {
-                    MenuItemFileSave.IsEnabled = false;
-                }
-                this.Title = s;
                 FileNameValue = value;
+                Edited = false;
             }
         }
 
+        private bool EditedValue;
+        private bool Edited
+        {
+            get { return EditedValue; }
+            set
+            {
+                EditedValue = value;
+                UpdateStatus();
+            }
+        }
+
+        private void UpdateStatus()
+        {
+            string s = InitialFileName;
+            if (FileName != "")
+                s += " - " + FileName;
+            if (Edited)
+                s += "(変更あり)";
+            this.Title = s;
+
+            if (FileName == "" || !Edited)
+                MenuItemFileSave.IsEnabled = false;
+            else
+                MenuItemFileSave.IsEnabled = true;
+
+            if(!Edited)
+                MenuItemFileSaveAs.IsEnabled = false;
+            else
+                MenuItemFileSaveAs.IsEnabled = true;
+        }
 
         public MainWindow()
         {
