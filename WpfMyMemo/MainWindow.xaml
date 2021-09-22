@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfMyMemo"
         mc:Ignorable="d"
-        Title="My memo" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="MyMemo" Height="450" Width="800" Loaded="Window_Loaded" Closing="Window_Closing">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem x:Name="MenuItemFile" Header="ファイル(_F)">
-                <MenuItem x:Name="MenuItemFileNew" Header="新規(_N)" InputGestureText="Ctrl+N" Visibility="Visible"/>
+                <MenuItem x:Name="MenuItemFileNew" Header="新規(_N)" InputGestureText="Ctrl+N" Visibility="Visible" Click="MenuItemFileNew_Click"/>
                 <MenuItem x:Name="MenuItemFileOpen" Header="開く(_O)..." InputGestureText="Ctrl+O" Click="MenuItemFileOpen_Click" Visibility="Visible"/>
                 <MenuItem x:Name="MenuItemFileSave" Header="上書き保存(_S)" InputGestureText="Ctrl+S" Click="MenuItemFileSave_Click"/>
                 <MenuItem x:Name="MenuItemFileSaveAs" Header="名前を付けて保存(_A)..." Click="MenuItemFileSaveAs_Click"/>
@@ -23,9 +23,8 @@
         <StackPanel>
             <TextBlock x:Name="labelFileName" />    
             <TextBox x:Name="textBoxMain" 
-                     Text="TextBox" 
                      TextWrapping="Wrap"
-                     VerticalScrollBarVisibility="Visible" Margin="10,5,10,5" AcceptsReturn="True" AcceptsTab="True"/>
+                     VerticalScrollBarVisibility="Visible" Margin="10,5,10,5" AcceptsReturn="True" AcceptsTab="True" TextChanged="textBoxMain_TextChanged"/>
         </StackPanel>
 
 

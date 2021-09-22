@@ -23,11 +23,12 @@ namespace WpfMyMemo
     public partial class MainWindow : Window
     {
         //OpenFileDialog openFileDialog1 = new OpenFileDialog();
+        
+        private string AppFileName; 
 
-        private string InitialFileName; 
         private string FileNameValue;
         private string FileName
-        { 
+        {
             get { return FileNameValue; }
             set
             {
@@ -49,19 +50,22 @@ namespace WpfMyMemo
 
         private void UpdateStatus()
         {
-            string s = InitialFileName;
+            string s = AppFileName;
             if (FileName != "")
                 s += " - " + FileName;
             if (Edited)
                 s += "(変更あり)";
             this.Title = s;
 
-            if (FileName == "" || !Edited)
+            //int len = textBoxMain.Text.Length;
+            //MessageBox.Show(len.ToString());
+
+            if (FileName == "" || !Edited || textBoxMain.Text.Length == 0)
                 MenuItemFileSave.IsEnabled = false;
             else
                 MenuItemFileSave.IsEnabled = true;
 
-            if(!Edited)
+            if(!Edited || textBoxMain.Text.Length == 0)
                 MenuItemFileSaveAs.IsEnabled = false;
             else
                 MenuItemFileSaveAs.IsEnabled = true;
@@ -71,7 +75,8 @@ namespace WpfMyMemo
         {
             InitializeComponent();
 
-            InitialFileName=  this.Title;
+            //AppFileName =  this.Title;
+            //FileName = "";
         }
 
         private void MenuItemFileExit_Click(object sender, RoutedEventArgs e)
@@ -82,8 +87,9 @@ namespace WpfMyMemo
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //this.Title = "My memo when Loaded";
-            
+            AppFileName = this.Title;
+            FileName = "";
+
         }
 
         private void MenuItemFileOpen_Click(object sender, RoutedEventArgs e)
@@ -154,17 +160,33 @@ namespace WpfMyMemo
         {
             SaveFile(FileName);
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!AskGiveUpText()) e.Cancel = true;
+        }
+
+        private bool AskGiveUpText()
+        {
+            if (!Edited || textBoxMain.Text.Length == 0)
+                return true;
+            //MessageBox.Show("編集内容を破棄しますか？", AppFileName, MessageBoxButton.YesNo, MessageBoxImage.Warning)
+            if (MessageBox.Show("編集内容を破棄しますか？", AppFileName, MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                return true;
+            else 
+                return false;
+        }
+
+        private void MenuItemFileNew_Click(object sender, RoutedEventArgs e)
+        {
+            if (!AskGiveUpText()) return;
+            textBoxMain.Clear();
+            FileName = "";
+        }
+
+        private void textBoxMain_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Edited = true;
+        }
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }
