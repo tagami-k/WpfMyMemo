@@ -9,8 +9,8 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem x:Name="MenuItemFile" Header="ファイル(_F)">
-                <MenuItem x:Name="MenuItemFileNew" Header="新規(_N)" InputGestureText="Ctrl+N"/>
-                <MenuItem x:Name="MenuItemFileOpen" Header="開く(_O)..." InputGestureText="Ctrl+O" Click="MenuItemFileOpen_Click"/>
+                <MenuItem x:Name="MenuItemFileNew" Header="新規(_N)" InputGestureText="Ctrl+N" Visibility="Visible"/>
+                <MenuItem x:Name="MenuItemFileOpen" Header="開く(_O)..." InputGestureText="Ctrl+O" Click="MenuItemFileOpen_Click" Visibility="Visible"/>
                 <MenuItem x:Name="MenuItemFileSave" Header="上書き保存(_S)" InputGestureText="Ctrl+S" Click="MenuItemFileSave_Click"/>
                 <MenuItem x:Name="MenuItemFileSaveAs" Header="名前を付けて保存(_A)..." Click="MenuItemFileSaveAs_Click"/>
                 <Separator x:Name="MenuItemFileSeparator1"/>
