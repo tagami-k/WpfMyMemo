@@ -21,7 +21,6 @@
             <MenuItem Header="ヘルプ(_H)"/>
         </Menu>
         <StackPanel>
-            <TextBlock x:Name="labelFileName" />    
             <TextBox x:Name="textBoxMain" 
                      TextWrapping="Wrap"
                      VerticalScrollBarVisibility="Visible" Margin="10,5,10,5" AcceptsReturn="True" AcceptsTab="True" TextChanged="textBoxMain_TextChanged"/>

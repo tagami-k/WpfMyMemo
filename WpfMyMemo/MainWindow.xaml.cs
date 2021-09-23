@@ -90,6 +90,12 @@ namespace WpfMyMemo
             AppFileName = this.Title;
             FileName = "";
 
+            if (1 < Environment.GetCommandLineArgs().Length)
+            {
+                string[] args = Environment.GetCommandLineArgs();
+                LoadFile(args[1]);
+            }
+
         }
 
         private void MenuItemFileOpen_Click(object sender, RoutedEventArgs e)
@@ -120,8 +126,16 @@ namespace WpfMyMemo
 
         private void LoadFile(string value)
         {
-            textBoxMain.Text = File.ReadAllText(value);
-            FileName = value;
+            if(File.Exists(value))
+            {
+                textBoxMain.Text = File.ReadAllText(value);
+                textBoxMain.Select(0, 0);
+                FileName = value;
+            }
+            else
+            {
+                MessageBox.Show(value + "が見つかりません", AppFileName);
+            }
         }
 
         private void MenuItemFileSaveAs_Click(object sender, RoutedEventArgs e)
