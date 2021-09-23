@@ -97,10 +97,22 @@ namespace WpfMyMemo
             AppFileName = this.Title;
             FileName = "";
 
+            this.MinWidth = this.Width; 
+            this.MinHeight =this.Height;
+
             Microsoft.Win32.RegistryKey regKey =
                 Microsoft.Win32.Registry.CurrentUser.CreateSubKey(RegistryKey);
             FilePath = regKey.GetValue("FilePath", 
                 System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)).ToString();
+
+            /*
+            const int initialLeft = 100;
+            const int initialTop = 100;
+            int l = int.Parse(regKey.GetValue("Left", initialLeft).ToString());
+            int t = int.Parse(regKey.GetValue("Top", initialTop).ToString());
+            int w = int.Parse(regKey.GetValue("Width", this.Width).ToString());
+            int h = int.Parse(regKey.GetValue("Width", this.Height).ToString());
+            */
 
             if (1 < Environment.GetCommandLineArgs().Length)
             {
@@ -226,6 +238,17 @@ namespace WpfMyMemo
             Microsoft.Win32.RegistryKey regKey =
                 Microsoft.Win32.Registry.CurrentUser.CreateSubKey(RegistryKey);
             regKey.SetValue("FilePath", FilePath);
+
+            regKey.SetValue("Left", this.Left);
+            regKey.SetValue("Top", this.Top);
+            regKey.SetValue("Width", this.Width);
+            regKey.SetValue("Height", this.Height);
+        }
+
+        private void MenuItemSettingFont_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("WPFには、FontDialogコンポーネントはありません。"); 
+            
         }
     }
 }

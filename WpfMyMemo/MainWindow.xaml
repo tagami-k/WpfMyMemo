@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfMyMemo"
         mc:Ignorable="d"
-        Title="MyMemo" Height="450" Width="800" Loaded="Window_Loaded" Closing="Window_Closing" Closed="Window_Closed">
+        Title="MyMemo" Height="200" Width="400" Loaded="Window_Loaded" Closing="Window_Closing" Closed="Window_Closed">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem x:Name="MenuItemFile" Header="ファイル(_F)">
@@ -17,15 +17,15 @@
                 <MenuItem x:Name="MenuItemFileExit" Header="終了(_X)" Click="MenuItemFileExit_Click"/>
             </MenuItem>
             <MenuItem Header="編集(_E)"/>
-            <MenuItem Header="設定(_S)"/>
+            <MenuItem x:Name="MenuItemSetting" Header="設定(_S)">
+                <MenuItem x:Name="MenuItemSettingFont" Header="フォント(_F)" Click="MenuItemSettingFont_Click"/>
+            </MenuItem>
             <MenuItem Header="ヘルプ(_H)"/>
         </Menu>
         <StackPanel>
             <TextBox x:Name="textBoxMain" 
                      TextWrapping="Wrap"
-                     VerticalScrollBarVisibility="Visible" Margin="10,5,10,5" AcceptsReturn="True" AcceptsTab="True" TextChanged="textBoxMain_TextChanged"/>
+                     VerticalScrollBarVisibility="Visible" AcceptsReturn="True" AcceptsTab="True" TextChanged="textBoxMain_TextChanged" FontFamily="ＭＳ ゴシック" Height="145"/>
         </StackPanel>
-
-
     </DockPanel>
 </Window>
