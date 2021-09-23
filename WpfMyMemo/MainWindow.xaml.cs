@@ -24,7 +24,10 @@ namespace WpfMyMemo
     {
         //OpenFileDialog openFileDialog1 = new OpenFileDialog();
         
-        private string AppFileName; 
+        private string AppFileName;
+
+        const string RegistryKey = @"Software\NikkeiSoftware" + "MyMemo";
+        private string FilePath;
 
         private string FileNameValue;
         private string FileName
@@ -33,6 +36,10 @@ namespace WpfMyMemo
             set
             {
                 FileNameValue = value;
+                if (value != "")
+                {
+                    FilePath = System.IO.Path.GetDirectoryName(value);
+                }
                 Edited = false;
             }
         }
@@ -90,6 +97,11 @@ namespace WpfMyMemo
             AppFileName = this.Title;
             FileName = "";
 
+            Microsoft.Win32.RegistryKey regKey =
+                Microsoft.Win32.Registry.CurrentUser.CreateSubKey(RegistryKey);
+            FilePath = regKey.GetValue("FilePath", 
+                System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)).ToString();
+
             if (1 < Environment.GetCommandLineArgs().Length)
             {
                 string[] args = Environment.GetCommandLineArgs();
@@ -100,9 +112,13 @@ namespace WpfMyMemo
 
         private void MenuItemFileOpen_Click(object sender, RoutedEventArgs e)
         {
+            if (!AskGiveUpText()) return;
+
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
             openFileDialog1.FilterIndex = 1;
-            openFileDialog1.Filter = "テキスト文書(.txt)|*.txt|HTML File(*.html, *.htm)|*.html;*.htm|すべてのファイル(*.*)|*.*";            
+            openFileDialog1.Filter = "テキスト文書(.txt)|*.txt|HTML File(*.html, *.htm)|*.html;*.htm|すべてのファイル(*.*)|*.*";
+
+            openFileDialog1.InitialDirectory = FilePath;
             openFileDialog1.FileName = "";
 
             bool? result = openFileDialog1.ShowDialog();
@@ -143,6 +159,8 @@ namespace WpfMyMemo
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
             saveFileDialog1.FilterIndex = 1;
             saveFileDialog1.Filter = "テキスト文書(.txt)|*.txt|HTML File(*.html, *.htm)|*.html;*.htm|すべてのファイル(*.*)|*.*";
+
+            saveFileDialog1.InitialDirectory = FilePath;
             saveFileDialog1.FileName = System.IO.Path.GetFileName(FileName);
 
             bool? result = saveFileDialog1.ShowDialog();
@@ -201,6 +219,13 @@ namespace WpfMyMemo
         private void textBoxMain_TextChanged(object sender, TextChangedEventArgs e)
         {
             Edited = true;
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Microsoft.Win32.RegistryKey regKey =
+                Microsoft.Win32.Registry.CurrentUser.CreateSubKey(RegistryKey);
+            regKey.SetValue("FilePath", FilePath);
         }
     }
 }
