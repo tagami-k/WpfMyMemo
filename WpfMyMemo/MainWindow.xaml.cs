@@ -23,12 +23,11 @@ namespace WpfMyMemo
     public partial class MainWindow : Window
     {
         //OpenFileDialog openFileDialog1 = new OpenFileDialog();
-        
-        private string AppFileName;
+        const string ApplicationName = "MyMemo";
 
-        const string RegistryKey = @"Software\NikkeiSoftware" + "MyMemo";
+        const string RegistryKey = @"Software\NikkeiSoftware\" + ApplicationName;
         private string FilePath;
-
+        
         private string FileNameValue;
         private string FileName
         {
@@ -57,7 +56,7 @@ namespace WpfMyMemo
 
         private void UpdateStatus()
         {
-            string s = AppFileName;
+            string s = ApplicationName;
             if (FileName != "")
                 s += " - " + FileName;
             if (Edited)
@@ -94,7 +93,7 @@ namespace WpfMyMemo
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            AppFileName = this.Title;
+            this.Title=ApplicationName;
             FileName = "";
 
             this.MinWidth = this.Width; 
@@ -166,7 +165,7 @@ namespace WpfMyMemo
             }
             else
             {
-                MessageBox.Show(value + "が見つかりません", AppFileName);
+                MessageBox.Show(value + "が見つかりません", ApplicationName);
             }
         }
 
@@ -219,7 +218,7 @@ namespace WpfMyMemo
             if (!Edited || textBoxMain.Text.Length == 0)
                 return true;
             //MessageBox.Show("編集内容を破棄しますか？", AppFileName, MessageBoxButton.YesNo, MessageBoxImage.Warning)
-            if (MessageBox.Show("編集内容を破棄しますか？", AppFileName, MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            if (MessageBox.Show("編集内容を破棄しますか？", ApplicationName, MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                 return true;
             else 
                 return false;

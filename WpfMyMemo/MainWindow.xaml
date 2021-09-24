@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfMyMemo"
         mc:Ignorable="d"
-        Title="MyMemo" Height="200" Width="400" Loaded="Window_Loaded" Closing="Window_Closing" Closed="Window_Closed">
+        Title="MainWindow" Height="200" Width="400" Loaded="Window_Loaded" Closing="Window_Closing" Closed="Window_Closed">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem x:Name="MenuItemFile" Header="ファイル(_F)">
