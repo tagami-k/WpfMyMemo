@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
+using System.Diagnostics;
 
 namespace WpfMyMemo
 {
@@ -122,6 +123,8 @@ namespace WpfMyMemo
                 string[] args = Environment.GetCommandLineArgs();
                 LoadFile(args[1]);
             }
+
+            MenuItemEdit_SubmenuOpened(sender, e);
 
         }
 
@@ -252,6 +255,92 @@ namespace WpfMyMemo
         {
             MessageBox.Show("WPFには、FontDialogコンポーネントはありません。"); 
             
+        }
+
+        private void MenuItemEditUndo_Click(object sender, RoutedEventArgs e)
+        {
+            textBoxMain.Undo();
+        }
+
+        private void MenuItemEditCut_Click(object sender, RoutedEventArgs e)
+        {
+            textBoxMain.Cut();
+        }
+
+        private void MenuItemEditCopy_Click(object sender, RoutedEventArgs e)
+        {
+            textBoxMain.Copy();
+        }
+
+        private void MenuItemEditPaste_Click(object sender, RoutedEventArgs e)
+        {
+            textBoxMain.Paste();
+        }
+
+        private void MenuItemEditDelete_Click(object sender, RoutedEventArgs e)
+        {
+            textBoxMain.SelectedText = "";
+        }
+
+        private void MenuItemEditSelectAll_Click(object sender, RoutedEventArgs e)
+        {
+            textBoxMain.SelectAll();
+        }
+
+        private void MenuItemEdit_SubmenuOpened(object sender, RoutedEventArgs e)
+        {
+            MenuItemEditPaste.IsEnabled = Clipboard.ContainsText();
+
+            bool b = textBoxMain.SelectionLength == 0;
+            MenuItemEditCut.IsEnabled = !b;
+            MenuItemEditCopy.IsEnabled = !b;
+            MenuItemEditDelete.IsEnabled = !b;
+
+            b = textBoxMain.Text.Length == 0;
+            MenuItemEditSelectAll.IsEnabled = !b;
+        }
+
+        private void MenuItemEdit_SubmenuClosed(object sender, RoutedEventArgs e)
+        {
+            MenuItemEditDelete.IsEnabled = false;
+        }
+
+        private void MenuItemHelpReadMe_Click(object sender, RoutedEventArgs e)
+        {
+            string s = System.IO.Path.GetDirectoryName(@"C:\Users\ai21\source\repos\CS_Nyumon\WpfMyMemo\"); 
+            // FilePath → Application.ExcutablePath
+            
+            s = System.IO.Path.Combine(s, "README.TXT");
+            if (System.IO.File.Exists(s))            
+            {
+                //System.Diagnostics.Process.Start(s);
+                ProceeStart("notepad.exe",s);
+            }
+            else
+                MessageBox.Show(s + "が見つかりません", ApplicationName);
+        }
+
+        private void MenuItemHelpWeb_Click(object sender, RoutedEventArgs e)
+        {
+            //System.Diagnostics.Process.Start("https://info.nikkeibp.co.jp/media/NSW/");
+            //Process.Start("https://info.nikkeibp.co.jp/media/NSW/");
+            ProceeStart("Chrome.exe", "https://info.nikkeibp.co.jp/media/NSW/");
+        }
+
+        private void ProceeStart(string FileName, string Args)
+        {
+            var app = new ProcessStartInfo();
+            app.FileName = FileName;
+            app.Arguments = Args;
+            app.UseShellExecute = true;
+
+            Process.Start(app);
+        }
+
+
+        private void MenuItemHelpVersion_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(ApplicationName + " 0.01" + Environment.NewLine + "(c)2021 Netz TOYOTA 茨城", "バージョン情報");
         }
     }
 }
