@@ -105,14 +105,18 @@ namespace WpfMyMemo
             FilePath = regKey.GetValue("FilePath", 
                 System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)).ToString();
 
-            /*
+            
             const int initialLeft = 100;
             const int initialTop = 100;
             int l = int.Parse(regKey.GetValue("Left", initialLeft).ToString());
             int t = int.Parse(regKey.GetValue("Top", initialTop).ToString());
             int w = int.Parse(regKey.GetValue("Width", this.Width).ToString());
-            int h = int.Parse(regKey.GetValue("Width", this.Height).ToString());
-            */
+            int h = int.Parse(regKey.GetValue("Height", this.Height).ToString());
+
+            this.Left = l;
+            this.Top = t;
+            this.Width = w;
+            this.Height = h;
 
             if (1 < Environment.GetCommandLineArgs().Length)
             {
