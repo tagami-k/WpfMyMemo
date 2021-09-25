@@ -14,6 +14,9 @@
                 <MenuItem x:Name="MenuItemFileSave" Header="上書き保存(_S)" InputGestureText="Ctrl+S" Click="MenuItemFileSave_Click"/>
                 <MenuItem x:Name="MenuItemFileSaveAs" Header="名前を付けて保存(_A)..." Click="MenuItemFileSaveAs_Click"/>
                 <Separator x:Name="MenuItemFileSeparator1"/>
+                <MenuItem x:Name="MenuItemFilePrintPreview" Header="印刷プレビュー(_V)..."/>
+                <MenuItem x:Name="MenuItemFilePrint" Header="印刷(_P)..." Click="MenuItemFilePrint_Click"/>
+                <Separator x:Name="MenuItemFileSeparator2"/>
                 <MenuItem x:Name="MenuItemFileExit" Header="終了(_X)" Click="MenuItemFileExit_Click"/>
             </MenuItem>
             <MenuItem x:Name="MenuItemEdit" Header="編集(_E)" SubmenuOpened="MenuItemEdit_SubmenuOpened" SubmenuClosed="MenuItemEdit_SubmenuClosed">

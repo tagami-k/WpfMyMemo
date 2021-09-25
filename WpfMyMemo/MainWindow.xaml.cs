@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Drawing;
+using System.Drawing.Configuration;
+using System.Drawing.Printing;
+using System.Printing;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -164,6 +168,7 @@ namespace WpfMyMemo
             {
                 textBoxMain.Text = File.ReadAllText(value);
                 textBoxMain.Select(0, 0);
+                //MessageBox.Show(textBoxMain.SelectedText);
                 FileName = value;
             }
             else
@@ -341,6 +346,26 @@ namespace WpfMyMemo
         private void MenuItemHelpVersion_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show(ApplicationName + " 0.01" + Environment.NewLine + "(c)2021 Netz TOYOTA 茨城", "バージョン情報");
+        }
+
+        /*
+         *      印刷
+         */
+        
+        private string PrintString;
+
+        private void MenuItemFilePrint_Click(object sender, RoutedEventArgs e)
+        {
+            //var pd = new PrintDocument();
+            //Print
+            SetPrintDocument1();
+        }
+
+        private void SetPrintDocument1()
+        {
+            PrintString = textBoxMain.Text;
+            
+            
         }
     }
 }
