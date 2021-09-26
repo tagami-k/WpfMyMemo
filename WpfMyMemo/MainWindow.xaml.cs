@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Configuration;
 using System.Drawing.Printing;
+
 using System.Printing;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
+//using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -82,6 +83,14 @@ namespace WpfMyMemo
                 MenuItemFileSaveAs.IsEnabled = true;
         }
 
+        /*
+         *      印刷
+         */
+        private PrintDocument printDocument1;
+        //? private PrintDialog printDialog1;
+        private string PrintString;
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -100,6 +109,11 @@ namespace WpfMyMemo
         {
             this.Title=ApplicationName;
             FileName = "";
+
+            printDocument1 = new PrintDocument();
+            //? printDialog1 = new PrintDialog();
+
+            //? printDialog1.Document = printDocument1;
 
             this.MinWidth = this.Width; 
             this.MinHeight =this.Height;
@@ -348,24 +362,48 @@ namespace WpfMyMemo
             MessageBox.Show(ApplicationName + " 0.01" + Environment.NewLine + "(c)2021 Netz TOYOTA 茨城", "バージョン情報");
         }
 
-        /*
-         *      印刷
-         */
-        
-        private string PrintString;
 
         private void MenuItemFilePrint_Click(object sender, RoutedEventArgs e)
         {
-            //var pd = new PrintDocument();
-            //Print
-            SetPrintDocument1();
+            MessageBox.Show("印刷を開始します。");
+            
+            //printDocument1 = new PrintDocument();
+            printDocument1.PrintPage += new PrintPageEventHandler(PrintPage);
+            SetPrintDocument(printDocument1);
+            printDocument1.Print();
+
+            MessageBox.Show("印刷を終了しました。");
         }
 
-        private void SetPrintDocument1()
+        private void SetPrintDocument(PrintDocument printDocument1)
         {
             PrintString = textBoxMain.Text;
-            
-            
+            printDocument1.DefaultPageSettings.Margins =
+                new Margins(20, 60, 20, 60);  // System.Drawing.Printing.Margins()
+            printDocument1.DocumentName = FileName;
+        }
+
+        private void PrintPage(object sender, PrintPageEventArgs e)
+        {
+            /*
+             int charactersOnPage = 0;
+             int linesPerPage = 0;
+             e.Graphics.MeasureString(PrintString, textBoxMain.Font  e.MarginBounds.Size,
+                 System.Drawing.StringFormat.GenericTypographic,
+                 out charactersOnPage, out linesPerPage);
+             e.Graphics.DrawString(PrintString,);
+                 :
+                 :
+                 :
+            */
+            Font f;
+            f = new Font("ＭＳ 明朝", 18);
+            e.Graphics.DrawString(
+                PrintString, f, Brushes.Black, 50, 50
+                );
+
+            e.HasMorePages = false;
+            PrintString = textBoxMain.Text;
         }
     }
 }
